@@ -46,4 +46,10 @@ Interactive maps: show course layouts and how each hole plays, with tips.
 
 TODO: Replace the wireframe below with you own design.
 
-![wireframe](wireframe-example.png)
+![wireframe]
+<img width="1768" alt="Screenshot 2025-04-07 at 7 08 59 PM" src="https://github.com/user-attachments/assets/447ae00f-3ee0-4244-8af6-e92b4ebdab06" />
+<img width="1333" alt="Screenshot 2025-04-07 at 7 09 20 PM" src="https://github.com/user-attachments/assets/9560a695-6579-4aba-9f00-c4f3b2ac0a7f" />
+<img width="1333" alt="Screenshot 2025-04-07 at 7 09 28 PM" src="https://github.com/user-attachments/assets/35113071-2245-4b5a-b800-980d9b10c859" />
+<img width="1333" alt="Screenshot 2025-04-07 at 7 09 34 PM" src="https://github.com/user-attachments/assets/fdfc0588-0d27-4129-b798-680d94041269"/>
+
+
