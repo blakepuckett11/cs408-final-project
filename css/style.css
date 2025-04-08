@@ -1,4 +1,40 @@
 h1{
-  border-color: #d3e644;
-  border-style: dashed;
+  text-align: left;
+  padding: 50px;
+}
+.golfimg {
+  display: flex;
+  justify-content: flex-end;
+  padding: 150px 
+}
+
+/* nav bar */ 
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 300px;
+  
+}
+.pages {
+  display: flex;
+  list-style: none;
+}
+
+a {
+  margin-right: 50px;
+  border-style: solid;
+  padding: 5px;
+  border-color: black;
+}
+.pages li a:hover {
+  background-color: grey;
+  border-radius: 4px;
+}
+
+.nav-icons {
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  margin-left: 10px;
+  background-color: none;
 }
