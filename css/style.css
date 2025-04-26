@@ -1,41 +1,62 @@
-h1{
-  text-align: left;
-  padding: 50px;
+/* General body styling */
+body {
+  font-family: 'Georgia', serif;
+  margin: 30px;
+  background-color: #f0f7f1; 
+  color: #2e3d29; 
 }
+
+/* Header styling */
+h1 {
+  text-align: center;
+  padding: 30px 0 20px;
+  font-size: 3em;
+  color: #2e3d29;
+  border-bottom: 5px solid #78a17c; 
+  width: 60%;
+  margin: 0 auto 40px;
+  background: linear-gradient(to right, #d0e4c1, #f0f7f1);
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(50, 80, 50, 0.2);
+}
+
+/* Golf image positioning */
 .golfimg {
   display: flex;
   justify-content: flex-end;
-  padding: 150px 
+  padding: 150px;
 }
 
-/* nav bar */ 
+/* Navigation bar */
 .navbar {
   display: flex;
-  justify-content: flex-end;
-  padding-right: 300px;
-  
+  justify-content: center;
+  margin-bottom: 40px;
 }
+
 .pages {
   display: flex;
   list-style: none;
+  padding: 0;
 }
 
 /* Nav Buttons */
 a {
-  margin-right: 50px;
+  margin: 0 20px;
   padding: 10px 20px;
-  border: 2px solid black;
-  border-radius: 6px;
-  background-color: #dad6d6;
+  border: 2px solid #3e5d4c;
+  border-radius: 8px;
+  background-color: #a5cba1;
   text-decoration: none;
-  color: black;
+  color: #2e3d29;
   font-weight: bold;
+  font-family: 'Verdana', sans-serif;
+  transition: all 0.2s ease-in-out;
 }
-/* hover */
+
 .pages li a:hover {
-  background-color: #d1d1d1;
-  border-radius: 6px;
-  transform: translateY(-2px);
+  background-color: #8fbf88;
+  transform: scale(1.05);
   cursor: pointer;
 }
 
@@ -44,5 +65,85 @@ a {
   width: 24px;
   height: 24px;
   margin-left: 10px;
-  background-color: none;
+}
+
+/* Form styling */
+form {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 320px;
+  margin: 0 auto 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: #3e5d4c;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #c3d9c2;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background-color: #4a8f5b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #3c7b4c;
+}
+
+#response-message {
+  margin-top: 15px;
+  color: #2d6a4f;
+  text-align: center;
+}
+
+/* container */
+#leaderboard {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(60, 90, 60, 0.1);
+}
+
+/* Leaderboard headers */
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  border-bottom: 3px solid #a5cba1;
+  padding: 12px 0;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  color: #2e3d29;
+}
+
+/* row */
+.entry {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #d8e8d2;
+  font-size: 1em;
+}
+
+.entry:nth-child(even) {
+  background-color: #f4fdf2;
 }
