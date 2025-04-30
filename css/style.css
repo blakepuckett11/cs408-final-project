@@ -32,6 +32,7 @@ h1 {
   display: flex;
   justify-content: center;
   margin-bottom: 40px;
+  
 }
 
 .pages {
@@ -205,6 +206,11 @@ button:hover {
   transform: scale(1.2);
 }
 
+.reaction-button:focus {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
 .reaction-count {
   font-size: 0.9em;
   color: #666;

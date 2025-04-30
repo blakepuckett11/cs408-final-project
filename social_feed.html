@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="css/style.css">
   <title>Golf Social Feed</title>
   <style>
-    /* Body styling*/ 
     body {
       font-family: Arial, sans-serif;
       background: #f0f2f5;
@@ -14,13 +13,26 @@
       padding: 20px;
     }
 
+    .player-card {
+      background: #fff;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+    }
+
+    .reaction-button:focus {
+      outline: 2px solid #1976d2;
+      outline-offset: 2px;
+    }
   </style>
 </head>
 <body>
-  <h1>Social Feed</h1>
-  <div class="feed-container" id="feed">
-    <p>Loading players...</p>
-  </div>
+  <main role="main">
+    <h1 id="page-title">Social Feed</h1>
+    <section class="feed-container" id="feed" aria-labelledby="page-title">
+      <p>Loading players...</p>
+    </section>
+  </main>
 
   <script>
     const API_URL = "https://s2ppqtzcr5.execute-api.us-east-2.amazonaws.com/items";
@@ -32,13 +44,13 @@
         const data = await response.json();
         renderPlayers(data);
       } catch (error) {
-        document.getElementById('feed').innerHTML = `<p class="error">${error.message}</p>`;
+        document.getElementById('feed').innerHTML = `<p class="error" role="alert">${error.message}</p>`;
       }
     }
   
     function renderPlayers(players) {
       const feed = document.getElementById('feed');
-      feed.innerHTML = ''; // Clear "loading" message
+      feed.innerHTML = ''; 
   
       if (!Array.isArray(players) || players.length === 0) {
         feed.innerHTML = "<p>No players found.</p>";
@@ -46,18 +58,27 @@
       }
   
       players.forEach((player, index) => {
-        const card = document.createElement('div');
+        const card = document.createElement('section');
         card.className = 'player-card';
-  
+        card.setAttribute('aria-label', `Player ${player.name || 'Unknown Player'}`);
+        card.setAttribute('tabindex', '0');
+
+        // player info html (tabindex added for accessability)
         card.innerHTML = `
-          <div class="player-name">${player.name || 'Unknown Player'}</div>
-          <div class="player-info">Score: ${player.score ?? 'N/A'}</div>
-          <div class="course-tag">Course: ${player.course || 'Unknown Course'}</div>
-          <div class="highlight">Highlight: ${player.highlight || 'No highlight available'}</div>
-          <div class="reaction-bar" id="reactions-${index}" data-selected="">
-            <button class="reaction-button" data-type="👍" data-index="${index}">👍 <span class="reaction-count" id="count-${index}-👍">0</span></button>
-            <button class="reaction-button" data-type="❤️" data-index="${index}">❤️ <span class="reaction-count" id="count-${index}-❤️">0</span></button>
-            <button class="reaction-button" data-type="😂" data-index="${index}">😂 <span class="reaction-count" id="count-${index}-😂">0</span></button>
+          <h2 class="player-name">${player.name || 'Unknown Player'}</h2>
+          <p class="player-info">Score: ${player.score ?? 'N/A'}</p>
+          <p class="course-tag">Course: ${player.course || 'Unknown Course'}</p>
+          <p class="highlight">Highlight: ${player.highlight || 'No highlight available'}</p>
+          <div class="reaction-bar" id="reactions-${index}" data-selected="" role="group" aria-label="Reactions">
+            <button class="reaction-button" tabindex = "1" aria-label="React with thumbs up" data-type="👍" data-index="${index}">
+              👍 <span class="reaction-count" id="count-${index}-👍">0</span>
+            </button>
+            <button class="reaction-button" tabindex = "2" aria-label="React with heart" data-type="❤️" data-index="${index}">
+              ❤️ <span class="reaction-count" id="count-${index}-❤️">0</span>
+            </button>
+            <button class="reaction-button" tabindex = "3" aria-label="React with laughing face" data-type="😂" data-index="${index}">
+              😂 <span class="reaction-count" id="count-${index}-😂">0</span>
+            </button>
           </div>
         `;
   
@@ -70,13 +91,10 @@
           const type = this.dataset.type;
           const bar = document.getElementById(`reactions-${index}`);
           const prevReaction = bar.dataset.selected;
-  
-          // return if the reaction is the same
-          if (prevReaction === type) {
-            return;
-          }
-  
-          // Decrease count for previous reaction if it exists
+
+          if (prevReaction === type) return;
+
+          // Decrease previous count
           if (prevReaction) {
             const prevCountSpan = document.getElementById(`count-${index}-${prevReaction}`);
             if (prevCountSpan) {
@@ -84,18 +102,17 @@
               prevCountSpan.textContent = Math.max(prevCount - 1, 0);
             }
           }
-  
-          // Increase count
+
+          // Increase new count
           const newCountSpan = document.getElementById(`count-${index}-${type}`);
           if (newCountSpan) {
             const newCount = parseInt(newCountSpan.textContent);
             newCountSpan.textContent = newCount + 1;
           }
-  
-          // Update selected reaction
+
+          // Update visual and logical state
           bar.dataset.selected = type;
-  
-          // Highlight selected button and reset others
+
           bar.querySelectorAll('.reaction-button').forEach(btn => {
             if (btn.dataset.type === type) {
               btn.style.opacity = '1';
@@ -113,8 +130,5 @@
   
     fetchPlayers();
   </script>
-  
-  
-
 </body>
 </html>

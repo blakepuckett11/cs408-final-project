@@ -7,8 +7,12 @@
   "author": "Pat von Student",
   "scripts": {
     "lint:html": "htmlhint"
-    },
+  },
   "devDependencies": {
     "qunit": "^2.21.1"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "cheerio": "^1.0.0"
   }
 }
