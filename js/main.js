@@ -15,14 +15,15 @@ function loaded() {
 function sayHello() {
     return 'hello';
 }
-
+currId = 1;
 document.getElementById('score-form').addEventListener('submit', async function(event) {
     event.preventDefault();
-  
+    
     const name = document.getElementById('name').value;
     const score = document.getElementById('score').value;
-
-    // Generate a unique ID (name + timestamp)
+    const course = document.getElementById('course').value;
+    const highlight = document.getElementById('highlight').value;
+    // Generate a unique ID 
     const id = `${name}-${Date.now()}`;
   
     try {
@@ -31,7 +32,7 @@ document.getElementById('score-form').addEventListener('submit', async function(
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id, name, score })
+        body: JSON.stringify({ id, name, score,course,highlight })
       });
   
       const data = await response.json();

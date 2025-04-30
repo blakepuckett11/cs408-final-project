@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/style.css">
+  <title>Golf Social Feed</title>
+  <style>
+    /* Body styling*/ 
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Social Feed</h1>
+  <div class="feed-container" id="feed">
+    <p>Loading players...</p>
+  </div>
+
+  <script>
+    const API_URL = "https://s2ppqtzcr5.execute-api.us-east-2.amazonaws.com/items";
+  
+    async function fetchPlayers() {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("Failed to fetch data");
+        const data = await response.json();
+        renderPlayers(data);
+      } catch (error) {
+        document.getElementById('feed').innerHTML = `<p class="error">${error.message}</p>`;
+      }
+    }
+  
+    function renderPlayers(players) {
+      const feed = document.getElementById('feed');
+      feed.innerHTML = ''; // Clear "loading" message
+  
+      if (!Array.isArray(players) || players.length === 0) {
+        feed.innerHTML = "<p>No players found.</p>";
+        return;
+      }
+  
+      players.forEach((player, index) => {
+        const card = document.createElement('div');
+        card.className = 'player-card';
+  
+        card.innerHTML = `
+          <div class="player-name">${player.name || 'Unknown Player'}</div>
+          <div class="player-info">Score: ${player.score ?? 'N/A'}</div>
+          <div class="course-tag">Course: ${player.course || 'Unknown Course'}</div>
+          <div class="highlight">Highlight: ${player.highlight || 'No highlight available'}</div>
+          <div class="reaction-bar" id="reactions-${index}" data-selected="">
+            <button class="reaction-button" data-type="👍" data-index="${index}">👍 <span class="reaction-count" id="count-${index}-👍">0</span></button>
+            <button class="reaction-button" data-type="❤️" data-index="${index}">❤️ <span class="reaction-count" id="count-${index}-❤️">0</span></button>
+            <button class="reaction-button" data-type="😂" data-index="${index}">😂 <span class="reaction-count" id="count-${index}-😂">0</span></button>
+          </div>
+        `;
+  
+        feed.appendChild(card);
+      });
+  
+      document.querySelectorAll('.reaction-button').forEach(button => {
+        button.addEventListener('click', function () {
+          const index = this.dataset.index;
+          const type = this.dataset.type;
+          const bar = document.getElementById(`reactions-${index}`);
+          const prevReaction = bar.dataset.selected;
+  
+          // return if the reaction is the same
+          if (prevReaction === type) {
+            return;
+          }
+  
+          // Decrease count for previous reaction if it exists
+          if (prevReaction) {
+            const prevCountSpan = document.getElementById(`count-${index}-${prevReaction}`);
+            if (prevCountSpan) {
+              const prevCount = parseInt(prevCountSpan.textContent);
+              prevCountSpan.textContent = Math.max(prevCount - 1, 0);
+            }
+          }
+  
+          // Increase count
+          const newCountSpan = document.getElementById(`count-${index}-${type}`);
+          if (newCountSpan) {
+            const newCount = parseInt(newCountSpan.textContent);
+            newCountSpan.textContent = newCount + 1;
+          }
+  
+          // Update selected reaction
+          bar.dataset.selected = type;
+  
+          // Highlight selected button and reset others
+          bar.querySelectorAll('.reaction-button').forEach(btn => {
+            if (btn.dataset.type === type) {
+              btn.style.opacity = '1';
+              btn.style.border = '2px solid #2196f3';
+              btn.style.backgroundColor = '#e3f2fd';
+            } else {
+              btn.style.opacity = '0.6';
+              btn.style.border = 'none';
+              btn.style.backgroundColor = 'transparent';
+            }
+          });
+        });
+      });
+    }
+  
+    fetchPlayers();
+  </script>
+  
+  
+
+</body>
+</html>
